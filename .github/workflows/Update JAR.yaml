@@ -74,3 +74,25 @@ jobs:
           git submodule update --remote --merge
           git commit -am "更新 JAR" || echo "无需更新 JAR"
           git push origin main
+
+  rubens:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 设置 Git 提交账户
+        run: |
+          git config --global user.email "30484319+zjw2017@users.noreply.github.com"
+          git config --global user.name "柚稚"
+      - name: 拉取 action_build_rubens_system
+        uses: actions/checkout@v4.2.2
+        with:
+          repository: Human-Machine-Matrix/action_build_rubens_system
+          token: ${{ secrets.GH_TOKEN }}
+          path: action_build_rubens_system
+          submodules: recursive
+          fetch-depth: 0
+      - name: 提交 action_build_rubens_system
+        run: |
+          cd action_build_rubens_system
+          git submodule update --remote --merge
+          git commit -am "更新 JAR" || echo "无需更新 JAR"
+          git push origin main
