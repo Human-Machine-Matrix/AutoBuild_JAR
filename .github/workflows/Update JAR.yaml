@@ -9,7 +9,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  GetCommitMessage:
+    runs-on: ubuntu-latest
+    outputs:
+      message: ${{ steps.getmsg.outputs.message }}
+    steps:
+      - uses: actions/checkout@v5.0.0
+        with:
+          fetch-depth: 1
+
+      - id: getmsg
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          # 保留完整信息（支持多行）
+          echo 'message<<EOF' >> $GITHUB_OUTPUT
+          echo "$msg" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
   lahaina:
+    needs: GetCommitMessage
     runs-on: ubuntu-latest
     steps:
       - name: 设置 Git 提交账户
@@ -32,6 +50,7 @@ jobs:
           git push origin main
   
   taro:
+    needs: GetCommitMessage
     runs-on: ubuntu-latest
     steps:
       - name: 设置 Git 提交账户
@@ -54,6 +73,7 @@ jobs:
           git push origin main
 
   kalama:
+    needs: GetCommitMessage
     runs-on: ubuntu-latest
     steps:
       - name: 设置 Git 提交账户
@@ -76,6 +96,7 @@ jobs:
           git push origin main
 
   rubens:
+    needs: GetCommitMessage
     runs-on: ubuntu-latest
     steps:
       - name: 设置 Git 提交账户
