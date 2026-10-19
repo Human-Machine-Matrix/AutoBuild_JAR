@@ -26,29 +26,6 @@ jobs:
           echo "$msg" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
-  lahaina:
-    needs: GetCommitMessage
-    runs-on: ubuntu-latest
-    steps:
-      - name: 设置 Git 提交账户
-        run: |
-          git config --global user.email "30484319+zjw2017@users.noreply.github.com"
-          git config --global user.name "柚稚"
-      - name: 拉取 action_build_lahaina_system
-        uses: actions/checkout@v6.0.2
-        with:
-          repository: Human-Machine-Matrix/action_build_lahaina_system
-          token: ${{ secrets.GH_TOKEN }}
-          path: action_build_lahaina_system
-          submodules: recursive
-          fetch-depth: 0
-      - name: 提交 action_build_lahaina_system
-        run: |
-          cd action_build_lahaina_system
-          git submodule update --remote --merge
-          git commit -am "${{ needs.GetCommitMessage.outputs.message }}" || echo "无需更新 JAR"
-          git push origin main
-  
   taro:
     needs: GetCommitMessage
     runs-on: ubuntu-latest
@@ -68,6 +45,29 @@ jobs:
       - name: 提交 action_build_taro_system
         run: |
           cd action_build_taro_system
+          git submodule update --remote --merge
+          git commit -am "${{ needs.GetCommitMessage.outputs.message }}" || echo "无需更新 JAR"
+          git push origin main
+
+  rubens:
+    needs: GetCommitMessage
+    runs-on: ubuntu-latest
+    steps:
+      - name: 设置 Git 提交账户
+        run: |
+          git config --global user.email "30484319+zjw2017@users.noreply.github.com"
+          git config --global user.name "柚稚"
+      - name: 拉取 action_build_rubens_system
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: Human-Machine-Matrix/action_build_rubens_system
+          token: ${{ secrets.GH_TOKEN }}
+          path: action_build_rubens_system
+          submodules: recursive
+          fetch-depth: 0
+      - name: 提交 action_build_rubens_system
+        run: |
+          cd action_build_rubens_system
           git submodule update --remote --merge
           git commit -am "${{ needs.GetCommitMessage.outputs.message }}" || echo "无需更新 JAR"
           git push origin main
@@ -95,7 +95,7 @@ jobs:
           git commit -am "${{ needs.GetCommitMessage.outputs.message }}" || echo "无需更新 JAR"
           git push origin main
 
-  rubens:
+  sun:
     needs: GetCommitMessage
     runs-on: ubuntu-latest
     steps:
@@ -103,17 +103,17 @@ jobs:
         run: |
           git config --global user.email "30484319+zjw2017@users.noreply.github.com"
           git config --global user.name "柚稚"
-      - name: 拉取 action_build_rubens_system
+      - name: 拉取 action_build_sun_system
         uses: actions/checkout@v6.0.2
         with:
-          repository: Human-Machine-Matrix/action_build_rubens_system
+          repository: Human-Machine-Matrix/action_build_sun_system
           token: ${{ secrets.GH_TOKEN }}
-          path: action_build_rubens_system
+          path: action_build_sun_system
           submodules: recursive
           fetch-depth: 0
-      - name: 提交 action_build_rubens_system
+      - name: 提交 action_build_sun_system
         run: |
-          cd action_build_rubens_system
+          cd action_build_sun_system
           git submodule update --remote --merge
           git commit -am "${{ needs.GetCommitMessage.outputs.message }}" || echo "无需更新 JAR"
           git push origin main
